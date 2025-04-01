@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "098e2ec6-bb9b-4165-96f1-fceadbf6d141",
+		"name": "Meetime Api",
+		"description": "# 🛠️ **HubSpot Integration API - Endpoints Guide**\n\nAqui está a documentação dos endpoints disponíveis na sua integração com a API do HubSpot.\n\n---\n\n## OAuth 🔐\n\n### 1. **Conexão com HubSpot**\n**Método**: `GET`  \n**Endpoint**: `/connect-hubspot`  \n**Descrição**: Redireciona o usuário para a página de autorização do HubSpot.\n\n**Exemplo**:  \n\nGET http://localhost:8080/connect-hubspot\n\n\n---\n\n### 2. **Obter URL de Autorização**\n**Método**: `GET`  \n**Endpoint**: `/oauth/authorization-url`  \n**Descrição**: Retorna a URL de autorização do HubSpot sem redirecionar.\n\n**Exemplo**:  \n\nGET http://localhost:8080/oauth/authorization-url\n\n\n---\n\n### 3. **Callback de Autorização**\n**Método**: `GET`  \n**Endpoint**: `/oauth/callback`  \n**Descrição**: Endpoint que o HubSpot chama após autorização bem-sucedida.\n\n**Exemplo**:  \n\nGET http://localhost:8080/oauth/callback?code=seu_codigo_aqui\n\n\n---\n\n## Contact 📇\n\n### 1. **Criar Contato**\n**Método**: `POST`  \n**Endpoint**: `/create-contact`  \n**Descrição**: Cria um novo contato no HubSpot.\n\n**Exemplo de Requisição**:\n\nPOST http://localhost:8080/create-contact Content-Type: application/json Authorization: Bearer seu_token_aqui\n\n{ \"properties\": { \"firstname\": \"Nome\", \"lastname\": \"Sobrenome\", \"email\": \"email@exemplo.com\", \"phone\": \"(11) 99999-9999\" } }\n\n\n---\n\n### 2. **Listar Contatos**\n**Método**: `GET`  \n**Endpoint**: `/get-contacts`  \n**Descrição**: Obtém a lista de contatos do HubSpot.\n\n**Exemplo de Requisição**:\n\nGET http://localhost:8080/get-contacts Authorization: Bearer seu_token_aqui\n\n---\n\n## Webhook 📡\n\n### 1. **Receber Webhook de Criação de Contato (lista)**\n**Método**: `POST`  \n**Endpoint**: `/webhook/contact-creation`  \n**Descrição**: Recebe notificações do HubSpot quando um contato é criado (formato lista).\n\n**Exemplo de Requisição**:\n\nPOST http://localhost:8080/webhook/contact-creation Content-Type: application/json\n\n[ { \"appId\": 10184300, \"eventId\": \"100\", \"subscriptionId\": \"3396913\", \"portalId\": \"49617379\", \"occurredAt\": 1743469383618, \"subscriptionType\": \"contact.creation\", \"attemptNumber\": 0, \"objectId\": \"123\", \"changeSource\": \"CRM\", \"changeFlag\": \"NEW\" } ]\n\n\n---\n\n### 2. **Receber Webhook de Criação de Contato (objeto único)**\n**Método**: `POST`  \n**Endpoint**: `/webhook/contact-creation-local`  \n**Descrição**: Recebe notificações do HubSpot quando um contato é criado (formato objeto único).\n\n**Exemplo de Requisição**:\n\nPOST http://localhost:8080/webhook/contact-creation-local Content-Type: application/json\n\n{ \"appId\": 10184300, \"eventId\": \"100\", \"subscriptionId\": \"3396913\", \"portalId\": \"49617379\", \"occurredAt\": 1743469383618, \"subscriptionType\": \"contact.creation\", \"attemptNumber\": 0, \"objectId\": \"123\", \"changeSource\": \"CRM\", \"changeFlag\": \"NEW\" }\n\n\n---\n\n## 🚀 **Testando e Integrando**\n\nApós configurar esses endpoints no seu **Postman**, você pode realizar testes integrados para:\n1. **Autenticação e autorização do HubSpot**.\n2. **Criar e listar contatos** na API do HubSpot.\n3. **Receber webhooks** quando um contato for criado.\n\nCertifique-se de usar o **Access Token** gerado durante o fluxo OAuth para acessar os endpoints de criação e listagem de contatos.\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37664634"
+	},
+	"item": [
+		{
+			"name": "OAuth",
+			"item": [
+				{
+					"name": "Authorization Url",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/oauth/authorization-url"
+					},
+					"response": []
+				},
+				{
+					"name": "Connect Hubspot - Auto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/connect-hubspot"
+					},
+					"response": []
+				},
+				{
+					"name": "HandleOAuthCallback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/callback?code=na1-11e6-bd84-4e6f-9620-a95a131b5b1f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"callback"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "na1-11e6-bd84-4e6f-9620-a95a131b5b1f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Create Contact",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "CNjX95zfMhIHAAEAQAAAARjUtNQXIJaF1iUo7MztBDIUWVF6Bd--oxCMxNeMkP4Ds-tXdiM6MAAAAEEAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAOABAAAAAAAAAAAAAAAQAkIUg8OcsmBn-xw07ih71JjRuUpEH01KA25hMVIAWgBgAGiWhdYlcAA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contactData\": {\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"123-456-7890\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/create-contact"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "CNjX95zfMhIHAAEAQAAAARjUtNQXIJaF1iUo7MztBDIUWVF6Bd--oxCMxNeMkP4Ds-tXdiM6MAAAAEEAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAOABAAAAAAAAAAAAAAAQAkIUg8OcsmBn-xw07ih71JjRuUpEH01KA25hMVIAWgBgAGiWhdYlcAA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/get-contacts"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "Contact Creation Webhook - Local",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "CLjQlJ3fMhIHAAEAQAAAARjUtNQXIJaF1iUo7MztBDIUj2fInYje7SK0XYfYI8slq-9_vgY6MAAAAEEAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAOABAAAAAAAAAAAAAAAQAkIUcIAAfuiX9E4Fd_ZHmE_96KecFttKA25hMVIAWgBgAGiWhdYlcAA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"appId\": 10184300,\r\n  \"eventId\": 100,\r\n  \"subscriptionId\": 3396913,\r\n  \"portalId\": 49617379,\r\n  \"occurredAt\": 1743515258620,\r\n  \"subscriptionType\": \"contact.creation\",\r\n  \"attemptNumber\": 0,\r\n  \"objectId\": 123,\r\n  \"changeSource\": \"CRM\",\r\n  \"changeFlag\": \"NEW\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/webhook/contact-creation-local"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
